@@ -1,3 +1,19 @@
+/**
+ * This file is part of Graylog.
+ *
+ * Graylog is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Graylog is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Graylog.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.graylog.senders;
 
 import com.google.common.base.Charsets;
@@ -27,6 +43,8 @@ public class TCPSender implements Sender {
     private Channel channel = null;
     private EventLoopGroup group;
 
+    private Bootstrap bootstrap;
+
     public TCPSender(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
@@ -35,19 +53,24 @@ public class TCPSender implements Sender {
     @Override
     public void initialize() {
         group = new NioEventLoopGroup();
-        Bootstrap b = new Bootstrap();
-        b.group(group).channel(NioSocketChannel.class);
+        bootstrap = new Bootstrap();
+        bootstrap.group(group).channel(NioSocketChannel.class);
 
-        b.option(ChannelOption.SO_KEEPALIVE, true);
-        b.handler(new ChannelInitializer<SocketChannel>() {
+        bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
+        bootstrap.handler(new ChannelInitializer<SocketChannel>() {
             @Override
             public void initChannel(SocketChannel ch) throws Exception {
                 ch.pipeline().addLast(new StringEncoder(Charsets.UTF_8));
             }
         });
 
+        connect();
+    }
+
+    private void connect() {
         try {
-            channel = b.connect(hostname, port).sync().channel();
+            LOG.info("Connecting to Splunk.");
+            channel = bootstrap.connect(hostname, port).sync().channel();
         } catch (InterruptedException ignored) {
             // noop
         }
@@ -62,9 +85,9 @@ public class TCPSender implements Sender {
 
     @Override
     public void send(Message message) {
-        if(channel == null || !channel.isActive()) {
-            LOG.error("Could not send message. Channel not open.");
-            return;
+        if(!isConnected()) {
+            LOG.info("Channel not open. Reconnecting.");
+            connect();
         }
 
         StringBuilder splunkMessage = new StringBuilder();
@@ -84,13 +107,22 @@ public class TCPSender implements Sender {
         channel.writeAndFlush(splunkMessage.append("\r\n").toString());
     }
 
+    @Override
+    public boolean isInitialized() {
+        return channel != null && channel.isActive();
+    }
+
+    private boolean isConnected() {
+        return isInitialized();
+    }
+
     private Object noNewLines(Object value) {
         if (value == null) {
             return null;
         }
 
         if (value instanceof String) {
-            value = ((String) value).replace("\n", "").replace("\r", "");
+            value = ((String) value).replace("\n", " ").replace("\r", " ");
         }
 
         return value;

@@ -1,3 +1,19 @@
+/**
+ * This file is part of Graylog.
+ *
+ * Graylog is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Graylog is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Graylog.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.graylog;
 
 import com.google.common.collect.ImmutableMap;
@@ -46,13 +62,13 @@ public class SplunkOutput implements MessageOutput {
                 configuration.getString(CK_SPLUNK_HOST),
                 configuration.getInt(CK_SPLUNK_PORT)
         );
-        sender.initialize();
 
         running = true;
     }
 
     @Override
     public void stop() {
+        sender.stop();
         running = false;
     }
 
@@ -65,6 +81,10 @@ public class SplunkOutput implements MessageOutput {
     public void write(Message message) throws Exception {
         if (message == null || message.getFields() == null || message.getFields().isEmpty()) {
             return;
+        }
+
+        if(!sender.isInitialized()) {
+            sender.initialize();
         }
 
         sender.send(message);
