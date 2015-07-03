@@ -52,42 +52,63 @@ public class TCPSender implements Sender {
 
     @Override
     public void initialize() {
-        group = new NioEventLoopGroup();
-        bootstrap = new Bootstrap();
-        bootstrap.group(group).channel(NioSocketChannel.class);
-
-        bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
-        bootstrap.handler(new ChannelInitializer<SocketChannel>() {
-            @Override
-            public void initChannel(SocketChannel ch) throws Exception {
-                ch.pipeline().addLast(new StringEncoder(Charsets.UTF_8));
-            }
-        });
-
         connect();
     }
 
     private void connect() {
         try {
             LOG.info("Connecting to Splunk.");
+            group = new NioEventLoopGroup();
+            bootstrap = new Bootstrap();
+            bootstrap.group(group).channel(NioSocketChannel.class);
+
+            bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
+            bootstrap.handler(new ChannelInitializer<SocketChannel>() {
+                @Override
+                public void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addLast(new StringEncoder(Charsets.UTF_8));
+                }
+            });
+
             channel = bootstrap.connect(hostname, port).sync().channel();
-        } catch (InterruptedException ignored) {
-            // noop
+        } catch (Exception e) {
+            LOG.error("Error when trying to connect to Splunk.", e);
+            disconnect();
+        }
+    }
+
+    private void disconnect() {
+        try {
+            if (channel != null) {
+                channel.close();
+                channel.deregister();
+            }
+        } catch(Exception e) {
+            LOG.warn("Could not close channel. Attempting graceful shutdown of eventloop group next.");
+        } finally {
+            if (group != null) {
+                group.shutdownGracefully();
+                LOG.debug("Eventloop group shutdown.");
+            }
         }
     }
 
     @Override
     public void stop() {
-        if (group != null) {
-            group.shutdownGracefully();
-        }
+        disconnect();
     }
 
     @Override
     public void send(Message message) {
         if(!isConnected()) {
             LOG.info("Channel not open. Reconnecting.");
+            disconnect();
             connect();
+
+            if (!isInitialized()) {
+                LOG.warn("Channel still not open. Rejecting this message.");
+                return;
+            }
         }
 
         StringBuilder splunkMessage = new StringBuilder();
@@ -104,7 +125,9 @@ public class TCPSender implements Sender {
             splunkMessage.append(" ").append(field.getKey()).append("=").append(escape(field.getValue()));
         }
 
-        channel.writeAndFlush(splunkMessage.append("\r\n").toString());
+        if (isInitialized()) {
+            channel.writeAndFlush(splunkMessage.append("\r\n").toString());
+        }
     }
 
     @Override
