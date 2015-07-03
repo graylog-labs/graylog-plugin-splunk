@@ -7,7 +7,13 @@ setup.
 
 ## Use cases
 
-
+* Forward a subset of data that should be analyzed in Splunk to save Splunk
+  license costs. Example: All firewall data goes into Graylog for your operations
+  team but some data that needs analysis by a non-technical audience also goes to
+  Splunk. The reduced amount of data in Splunk allows you to get a smaller
+  Splunk license.
+* Use Graylog as a pure data router in the middle. Forward some data to Splunk,
+  some to long-term archival and some to another monitoring system.
 
 ## Installing the plugin
 
