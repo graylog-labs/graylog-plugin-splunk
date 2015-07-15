@@ -1,19 +1,17 @@
 # Splunk output plugin for Graylog
 
-This plugin enables you to forward a stream of data from Graylog to any Splunk
-setup.
+This plugin enables you to selectively forward log messages from Graylog, in real time to one or more Splunk deployments.
 
 ![](https://github.com/Graylog2/plugin-output-splunk/blob/master/images/screenshot1.png)
 
 ## Use cases
 
-* Forward a subset of data that should be analyzed in Splunk to save Splunk
-  license costs. Example: All firewall data goes into Graylog for your operations
-  team but some data that needs analysis by a non-technical audience also goes to
-  Splunk. The reduced amount of data in Splunk allows you to get a smaller
-  Splunk license.
-* Use Graylog as a pure data router in the middle. Forward some data to Splunk,
-  some to long-term archival and some to another monitoring system.
+* Forward a subset of data for further analysis/correlation in Splunk to reduce Splunk license costs. 
+  Example: All network firewall data is forwarded into Graylog for operations and initial security analysis. 
+  A subset of the data such as failed login attempts or denied connections is then sent onto Splunk for further analysis/enrichment. 
+  This can potentially reduce the amount of data indexed by Splunk, resulting in improved Splunk performace - less data to mine, better quality data to search on and reduced license cost.
+  Retain all of your security logs in Graylog for compliance and archival requirements.  
+* Use Graylog as a data router/noise filter. Forward 'actionable' data to Splunk, everything to a long-term archive (i.e. CSV output via the Graylog API) and anomalies/events to the primary monitoring system.
 
 ## Installing the plugin
 
