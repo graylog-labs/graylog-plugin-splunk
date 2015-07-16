@@ -150,7 +150,7 @@ public class SplunkOutput implements MessageOutput {
 
     public static class Descriptor extends MessageOutput.Descriptor {
         public Descriptor() {
-            super("Splunk", false, "", "Writes messages to your Splunk installation via UDP or TCP.");
+            super("Splunk Output", false, "", "Writes messages to your Splunk installation via UDP or TCP.");
         }
     }
 
