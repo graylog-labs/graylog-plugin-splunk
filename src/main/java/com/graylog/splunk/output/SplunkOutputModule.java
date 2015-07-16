@@ -14,17 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Graylog.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.graylog.senders;
+package com.graylog.splunk.output;
 
-import org.graylog2.plugin.Message;
+import org.graylog2.plugin.PluginConfigBean;
+import org.graylog2.plugin.PluginModule;
 
-public interface Sender {
+import java.util.Collections;
+import java.util.Set;
 
-    void initialize();
-    void stop();
+public class SplunkOutputModule extends PluginModule {
 
-    void send(Message message);
+    @Override
+    public Set<? extends PluginConfigBean> getConfigBeans() {
+        return Collections.emptySet();
+    }
 
-    boolean isInitialized();
-
+    @Override
+    protected void configure() {
+        addMessageOutput(SplunkOutput.class);
+        addConfigBeans();
+    }
 }

@@ -15,7 +15,7 @@
  * along with Graylog.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.graylog.senders;
+package com.graylog.splunk.output;
 
 import io.netty.channel.Channel;
 import org.slf4j.Logger;

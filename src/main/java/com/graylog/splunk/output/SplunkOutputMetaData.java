@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Graylog.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.graylog;
+package com.graylog.splunk.output;
 
 import org.graylog2.plugin.PluginMetaData;
 import org.graylog2.plugin.ServerStatus;
@@ -28,12 +28,12 @@ import java.util.Set;
 public class SplunkOutputMetaData implements PluginMetaData {
     @Override
     public String getUniqueId() {
-        return "com.graylog.SplunkOutputPlugin";
+        return "com.graylog.splunk.output.SplunkOutputPlugin";
     }
 
     @Override
     public String getName() {
-        return "SplunkOutput";
+        return "Splunk Output";
     }
 
     @Override
@@ -48,12 +48,12 @@ public class SplunkOutputMetaData implements PluginMetaData {
 
     @Override
     public Version getVersion() {
-        return new Version(0, 1, 0);
+        return new Version(0, 2, 0);
     }
 
     @Override
     public String getDescription() {
-        return "Writes messages to your Splunk installation via UDP or TCP.";
+        return "Writes messages to your Splunk installation via TCP.";
     }
 
     @Override

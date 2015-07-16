@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with Graylog.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.graylog;
+package com.graylog.splunk.output;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.graylog.senders.TCPSender;
+import com.graylog.splunk.output.senders.TCPSender;
 import org.graylog2.plugin.Message;
 import org.graylog2.plugin.configuration.Configuration;
 import org.graylog2.plugin.configuration.ConfigurationRequest;
@@ -31,7 +31,7 @@ import org.graylog2.plugin.inputs.annotations.FactoryClass;
 import org.graylog2.plugin.outputs.MessageOutput;
 import org.graylog2.plugin.outputs.MessageOutputConfigurationException;
 import org.graylog2.plugin.streams.Stream;
-import com.graylog.senders.Sender;
+import com.graylog.splunk.output.senders.Sender;
 
 import java.util.List;
 import java.util.Map;

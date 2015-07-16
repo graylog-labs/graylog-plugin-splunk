@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Graylog.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.graylog.senders;
+package com.graylog.splunk.output.senders;
 
+import com.graylog.splunk.output.SplunkSenderThread;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
