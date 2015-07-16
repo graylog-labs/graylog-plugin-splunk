@@ -6,7 +6,7 @@
 
     <groupId>com.graylog</groupId>
     <artifactId>plugin-output-splunk</artifactId>
-    <version>0.3.0-SNAPSHOTg</version>
+    <version>0.4.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
