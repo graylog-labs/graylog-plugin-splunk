@@ -4,6 +4,8 @@ This plugin enables you to selectively forward log messages from Graylog, in rea
 
 ![](https://github.com/Graylog2/plugin-output-splunk/blob/master/images/screenshot1.png)
 
+#### Please run this plugin together with at least Graylog v1.1.
+
 ## Use cases
 
 * Forward a subset of data for further analysis/correlation in Splunk to reduce Splunk license costs. 
