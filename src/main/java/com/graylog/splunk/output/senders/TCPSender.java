@@ -145,7 +145,7 @@ public class TCPSender implements Sender {
         splunkMessage.append(message.getTimestamp().toString("yyyy/MM/dd-HH:mm:ss.SSS"))
                 .append(" ")
                 .append(noNewLines(message.getMessage()))
-                .append(" source=").append(escape(message.getField(Message.FIELD_SOURCE)));
+                .append(" original_source=").append(escape(message.getField(Message.FIELD_SOURCE)));
 
         for (Map.Entry<String, Object> field : message.getFields().entrySet()) {
             if (Message.RESERVED_FIELDS.contains(field.getKey()) || field.getKey().equals(Message.FIELD_STREAMS)) {
