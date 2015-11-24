@@ -1,4 +1,4 @@
-Splunk Plugin for Graylog
+Graylog plugin for Splunk
 =========================
 
 [![Build Status](https://travis-ci.org/Graylog2/graylog-plugin-splunk.svg)](https://travis-ci.org/Graylog2/graylog-plugin-splunk)
