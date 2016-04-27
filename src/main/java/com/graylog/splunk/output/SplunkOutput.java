@@ -19,6 +19,7 @@ package com.graylog.splunk.output;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.graylog.splunk.output.senders.Sender;
 import com.graylog.splunk.output.senders.TCPSender;
 import org.graylog2.plugin.Message;
 import org.graylog2.plugin.configuration.Configuration;
@@ -27,11 +28,11 @@ import org.graylog2.plugin.configuration.fields.ConfigurationField;
 import org.graylog2.plugin.configuration.fields.DropdownField;
 import org.graylog2.plugin.configuration.fields.NumberField;
 import org.graylog2.plugin.configuration.fields.TextField;
+import org.graylog2.plugin.inputs.annotations.ConfigClass;
 import org.graylog2.plugin.inputs.annotations.FactoryClass;
 import org.graylog2.plugin.outputs.MessageOutput;
 import org.graylog2.plugin.outputs.MessageOutputConfigurationException;
 import org.graylog2.plugin.streams.Stream;
-import com.graylog.splunk.output.senders.Sender;
 
 import java.util.List;
 import java.util.Map;
@@ -44,14 +45,10 @@ public class SplunkOutput implements MessageOutput {
 
     private boolean running = true;
 
-    private final Configuration configuration;
-
     private final Sender sender;
 
     @Inject
-    public SplunkOutput(@Assisted Stream stream, @Assisted Configuration configuration) throws MessageOutputConfigurationException {
-        this.configuration = configuration;
-
+    public SplunkOutput(@Assisted Configuration configuration) throws MessageOutputConfigurationException {
         // Check configuration.
         if (!checkConfiguration(configuration)) {
             throw new MessageOutputConfigurationException("Missing configuration.");
@@ -105,7 +102,7 @@ public class SplunkOutput implements MessageOutput {
         return c.stringIsSet(CK_SPLUNK_HOST)
                 && c.intIsSet(CK_SPLUNK_PORT)
                 && c.stringIsSet(CK_SPLUNK_PROTOCOL)
-                && (c.getString(CK_SPLUNK_PROTOCOL).equals("UDP") || c.getString(CK_SPLUNK_PROTOCOL).equals("TCP"));
+                && ("UDP".equals(c.getString(CK_SPLUNK_PROTOCOL)) || "TCP".equals(c.getString(CK_SPLUNK_PROTOCOL)));
     }
 
     @FactoryClass
@@ -120,6 +117,7 @@ public class SplunkOutput implements MessageOutput {
         Descriptor getDescriptor();
     }
 
+    @ConfigClass
     public static class Config extends MessageOutput.Config {
         @Override
         public ConfigurationRequest getRequestedConfiguration() {

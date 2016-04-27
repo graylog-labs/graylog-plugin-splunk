@@ -19,7 +19,13 @@ package com.graylog.splunk.output.senders;
 import com.graylog.splunk.output.SplunkSenderThread;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -191,9 +197,7 @@ public class TCPSender implements Sender {
         if (value instanceof String) {
             Matcher matcher = WHITESPACE_PATTERN.matcher((String) value);
             if (matcher.find()) {
-                StringBuilder sb = new StringBuilder()
-                        .append("\"").append(value).append("\"");
-                value = sb.toString();
+                value = "\"" + value + "\"";
             }
         }
 
