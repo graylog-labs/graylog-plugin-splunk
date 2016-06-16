@@ -9,7 +9,7 @@
 
     <groupId>org.graylog.plugins</groupId>
     <artifactId>graylog-plugin-splunk</artifactId>
-    <version>0.4.0-SNAPSHOT</version>
+    <version>0.4.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
