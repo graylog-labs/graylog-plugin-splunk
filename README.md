@@ -7,7 +7,7 @@ This plugin enables you to selectively forward log messages from Graylog, in rea
 
 ![](https://github.com/Graylog2/graylog-plugin-splunk/blob/master/images/screenshot1.png)
 
-**Required Graylog version:** 1.1 and later
+**Required Graylog version:** 2.0.0 and later
 
 ## Use cases
 
