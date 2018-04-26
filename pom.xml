@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>graylog-plugin-splunk</artifactId>
-    <version>0.5.0-rc.1</version>
+    <version>0.5.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -23,7 +23,7 @@
         <connection>scm:git:git@github.com:graylog-labs/graylog-plugin-splunk.git</connection>
         <developerConnection>scm:git:git@github.com:graylog-labs/graylog-plugin-splunk.git</developerConnection>
         <url>https://github.com/graylog-labs/graylog-plugin-splunk</url>
-        <tag>0.5.0-rc.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
