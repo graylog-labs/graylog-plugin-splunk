@@ -25,6 +25,8 @@ import java.util.Collections;
 import java.util.Set;
 
 public class SplunkOutputMetaData implements PluginMetaData {
+    private static final String PLUGIN_PROPERTIES = "org.graylog.plugins.graylog-plugin-splunk/graylog-plugin.properties";
+
     @Override
     public String getUniqueId() {
         return "com.graylog.splunk.output.SplunkOutputPlugin";
@@ -42,12 +44,12 @@ public class SplunkOutputMetaData implements PluginMetaData {
 
     @Override
     public URI getURL() {
-        return URI.create("https://www.graylog.org/");
+        return URI.create("https://github.com/graylog-labs/graylog-plugin-splunk");
     }
 
     @Override
     public Version getVersion() {
-        return new Version(0, 4, 1);
+        return Version.fromPluginProperties(getClass(), PLUGIN_PROPERTIES, "version", Version.from(1, 0, 0));
     }
 
     @Override
@@ -57,7 +59,7 @@ public class SplunkOutputMetaData implements PluginMetaData {
 
     @Override
     public Version getRequiredVersion() {
-        return new Version(2, 0, 0);
+        return Version.fromPluginProperties(getClass(), PLUGIN_PROPERTIES, "graylog.version", Version.from(2, 4, 0));
     }
 
     @Override
