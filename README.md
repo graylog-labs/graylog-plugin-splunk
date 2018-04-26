@@ -1,11 +1,11 @@
 Graylog plugin for Splunk
 =========================
 
-[![Build Status](https://travis-ci.org/Graylog2/graylog-plugin-splunk.svg)](https://travis-ci.org/Graylog2/graylog-plugin-splunk)
+[![Build Status](https://travis-ci.org/graylog-labs/graylog-plugin-splunk.svg)](https://travis-ci.org/graylog-labs/graylog-plugin-splunk)
 
 This plugin enables you to selectively forward log messages from Graylog, in real time to one or more Splunk deployments.
 
-![](https://github.com/Graylog2/graylog-plugin-splunk/blob/master/images/screenshot1.png)
+![](https://github.com/graylog-labs/graylog-plugin-splunk/blob/master/images/screenshot1.png)
 
 **Required Graylog version:** 2.0.0 and later
 
@@ -20,7 +20,7 @@ This plugin enables you to selectively forward log messages from Graylog, in rea
 
 ## Installation
 
-[Download the plugin](https://github.com/Graylog2/graylog-plugin-splunk/releases)
+[Download the plugin](https://github.com/graylog-labs/graylog-plugin-splunk/releases)
 and place the `.jar` file in your Graylog plugin directory. The plugin directory
 is the `plugins/` folder relative from your `graylog-server` directory by default
 and can be configured in your `graylog.conf` file.
@@ -42,7 +42,7 @@ Set the *Sourcetype* to *Miscellaneous -> generic_single_line* and leave the
 other options as they are. If you know what you are doing you can of course
 change any other settings as you wish.
 
-![](https://github.com/Graylog2/graylog-plugin-splunk/blob/master/images/screenshot2.png)
+![](https://github.com/graylog-labs/graylog-plugin-splunk/blob/master/images/screenshot2.png)
 
 Click on *Review* and then *Submit*. Remember the TCP port you configured
 because you will have to configure Graylog to send data to it in the next step.
@@ -52,7 +52,7 @@ because you will have to configure Graylog to send data to it in the next step.
 In Graylog, go to the outputs configuration of a stream and add a new "Splunk
 output" like this:
 
-![](https://github.com/Graylog2/graylog-plugin-splunk/blob/master/images/screenshot3.png)
+![](https://github.com/graylog-labs/graylog-plugin-splunk/blob/master/images/screenshot3.png)
 
 All messages coming into that stream should now be forwarded to your Splunk setup
 in realtime.

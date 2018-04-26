@@ -17,9 +17,9 @@
     <url>https://www.graylog.org</url>
 
     <scm>
-        <connection>scm:git:git@github.com:Graylog2/graylog-plugin-splunk.git</connection>
-        <developerConnection>scm:git:git@github.com:Graylog2/graylog-plugin-splunk.git</developerConnection>
-        <url>https://github.com/Graylog2/graylog-plugin-splunk</url>
+        <connection>scm:git:git@github.com:graylog-labs/graylog-plugin-splunk.git</connection>
+        <developerConnection>scm:git:git@github.com:graylog-labs/graylog-plugin-splunk.git</developerConnection>
+        <url>https://github.com/graylog-labs/graylog-plugin-splunk</url>
         <tag>HEAD</tag>
     </scm>
 
